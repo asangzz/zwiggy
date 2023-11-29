@@ -11,7 +11,7 @@ function App() {
     <Router>
     <div>
       <Header />
-      <div className="container mt-3">
+      <div>
         <Routes>
           <Route path="/" exact element={<Home/>} />
           <Route path="/features" element={<Features/>} /> 

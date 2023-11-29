@@ -15,12 +15,12 @@ const Footer = () => {
 
         {/* Center Section (Logo) */}
         <div>
-          <img src="/logo512.png" alt="Logo" height="50" />
+          <img src="/zwiggy.png" alt="Logo" height="50" />
         </div>
 
         {/* Right Section (Copyright Remarks) */}
         <div className="text-right">
-          <p>&copy; 2023 Your Website. All rights reserved.</p>
+          <p>&copy; 2023 Zwiggy. All rights reserved.</p>
         </div>
       </div>
     </footer>
