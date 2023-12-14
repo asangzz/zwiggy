@@ -4,7 +4,7 @@ import { FaPhone } from 'react-icons/fa'; // Import the phone icon from react-ic
 
 const Footer = () => {
   return (
-    <footer className="bg-body-tertiary text-center p-3 mt-5 fixed-bottom w-100">
+    <footer className="bg-body-tertiary text-center p-3 mt-5 w-100">
       <div className="d-flex justify-content-between align-items-center">
         {/* Left Section (Contact Details) */}
         <div className="text-left">
