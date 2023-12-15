@@ -26,8 +26,10 @@ app.use('/api', require("./routes/users"))
 
 app.use('/api', require("./routes/createcategory"))
 app.use('/api', require("./routes/foodCategory"))
-app.use('/api', require("./routes/createfooditem")) 
+app.use('/api', require("./routes/createFoodItem")) 
 app.use('/api', require("./routes/foodItem")) 
+app.use('/api', require("./routes/orderData")) 
+app.use('/api', require("./routes/restaurantCreateUser"))
 
 app.listen(4000)
 

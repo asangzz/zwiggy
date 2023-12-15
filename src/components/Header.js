@@ -1,7 +1,28 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react'
+import { Link, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import Modal from '../Modal';
+import Cart from '../view/Cart';
+import { useCart } from './ContextReducer';
 
 export default function Header() {
+
+  const [cartView, setCartView] = useState(false)
+    localStorage.setItem('temp', "first")
+  const navigate = useNavigate();
+  const handleLogout = ()=>{
+    localStorage.removeItem("authToken");
+    navigate('/login')
+
+  }
+  const loadCart = () => {
+   // setCartView(true)
+   navigate('/cart')
+}
+
+const items = useCart();
+
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
@@ -23,34 +44,53 @@ export default function Header() {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <Link className="nav-link" to="/" activeclassname="active">
+          <ul className="navbar-nav me-auto mb-2">
+          <li className="nav-item">
+               <Link className="nav-link active" to="/" activeclassname="active">
                 Home
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/features" activeclassname="active">
-                Features
-              </Link>
-            </li>
+              </Link>  </li>
+              {(localStorage.getItem("authToken"))? 
+               <li className="nav-item">
+               <Link className="nav-link active" to="/myorder" activeclassname="active">
+                MyOrders
+              </Link>  </li> : ""
+            }
+             
+          
+            
           </ul>
-
-          {/* Right Section (Login) - Included in the collapsible div */}
-          <ul className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">
+{/* Right Section (Login) - Included in the collapsible div */}
+ <div className='d-flex'>
+{(!localStorage.getItem("authToken"))? 
+                 <div>
+                <Link className="btn bg-white text-success mx-1" to="/login">
                 Login
-              </Link>
-            </li>
-          </ul>
-          <ul className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <Link className="nav-link" to="/signup">
+              </Link> 
+            
+              <Link className="btn bg-white text-success mx-1" to="/signup">
                 SignUp
               </Link>
-            </li>
-          </ul>
+          </div>
+             :<div>
+               <div className="btn bg-white text-success mx-2 " onClick={loadCart}>
+                                    <FontAwesomeIcon icon={faShoppingCart}  >
+                                       
+                                    </FontAwesomeIcon>
+                                    My Cart {(items.length !== undefined )?items.length : 0}
+                                </div>
+
+                                {cartView ? <Modal onClose={() => setCartView(false)}><Cart></Cart></Modal> : ""}
+               <div className="btn bg-white text-danger mx-1" onClick={handleLogout}>
+             Logout
+           </div>
+             </div>
+             
+            }
+
+            </div>
+           
+          
+          
         </div>
       </div>
     </nav>

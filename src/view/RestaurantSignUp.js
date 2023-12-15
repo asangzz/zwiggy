@@ -10,7 +10,7 @@ export default function SignUp() {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:4000/api/createuser", {
+    const response = await fetch("http://localhost:4000/api/rcreateuser", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -38,11 +38,11 @@ export default function SignUp() {
   return (
     <>
       <div className='container'>
+        <h4>Restaurant Signup</h4>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label htmlFor="name" className="form-label">Name</label>
-            <input type="text" className="form-control" name='name' value={credentials.name} onChange={onChange} />
-            <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+            <label htmlFor="name" className="form-label">Restaurant Name</label>
+            <input type="text" className="form-control" name='name' value={credentials.name} onChange={onChange} /> 
           </div>
           <div className="mb-3">
             <label htmlFor="email" className="form-label">Email address</label>
@@ -55,7 +55,7 @@ export default function SignUp() {
           </div>
           
           <div className="mb-3">
-            <label htmlFor="address" className="form-label">Address</label>
+            <label htmlFor="address" className="form-label">Location</label>
             <input type="text" className="form-control" name='geolocation' value={credentials.geolocation} onChange={onChange} />
           </div>
           <button type="submit" className="btn btn-success">Submit</button>

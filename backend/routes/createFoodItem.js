@@ -15,7 +15,7 @@ body('name').isLength({min:5})
     
     try {
           await FoodItem.create({
-        CategoryName: req.CategoryName,
+        CategoryName: req.body.CategoryName,
         name: req.body.name, 
         img: req.body.img,
         option: req.body.option,
