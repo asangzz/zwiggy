@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 export default function SignUp() {
 
-  const [credentials, setcredentails] = useState({ name: "", email: "", password: "", geolocation: "" });
+  const [credentials, setcredentails] = useState({ name: "", email: "", password: "", geolocation: "", open: '07:00',close: '23:00' });
 
 
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ export default function SignUp() {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ name: credentials.name, email: credentials.email, password: credentials.password, location: credentials.geolocation })
+      body: JSON.stringify({ name: credentials.name, email: credentials.email, password: credentials.password, location: credentials.geolocation, open: credentials.open, close: credentials.close })
 
     })
 
@@ -27,7 +27,7 @@ export default function SignUp() {
     }
 
     if (json.success) {
-      localStorage.setItem('userEmail', credentials.email)
+      localStorage.setItem('restaurantEmail', credentials.email)
       localStorage.setItem("authToken", json.authToken)
       navigate("/")
     }
@@ -42,7 +42,7 @@ export default function SignUp() {
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="name" className="form-label">Restaurant Name</label>
-            <input type="text" className="form-control" name='name' value={credentials.name} onChange={onChange} /> 
+            <input type="text" className="form-control" name='name' value={credentials.name} onChange={onChange} />
           </div>
           <div className="mb-3">
             <label htmlFor="email" className="form-label">Email address</label>
@@ -53,15 +53,25 @@ export default function SignUp() {
             <label htmlFor="password" className="form-label">Password</label>
             <input type="password" className="form-control" name='password' value={credentials.password} onChange={onChange} />
           </div>
-          
+
           <div className="mb-3">
             <label htmlFor="address" className="form-label">Location</label>
             <input type="text" className="form-control" name='geolocation' value={credentials.geolocation} onChange={onChange} />
           </div>
+          <div className='d-flex'>
+      <div className="mb-3 me-3">
+        <label htmlFor="openingTime" className="form-label">Opening Time</label>
+        <input type="time" className="form-control" id="openingTime" name='open' value={credentials.open} onChange={onChange} />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="closingTime" className="form-label">Closing Time</label>
+        <input type="time" className="form-control" id="closingTime" name='close' value={credentials.close} onChange={onChange} />
+      </div>
+    </div>
           <button type="submit" className="btn btn-success">Submit</button>
-           <Link className="m-3 btn btn-danger" to="/login">
-                Already an account
-              </Link> 
+          <Link className="m-3 btn btn-danger" to="/restaurantLogin">
+            Restaurant already registered?
+          </Link>
         </form>
       </div>
 

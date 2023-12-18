@@ -18,6 +18,14 @@ const RestaurantUserSchema = new Schema({
     type: String,
     required: true
   },
+  open: {
+    type: String,
+    required: true
+  },
+  close:{
+    type: String,
+    required: true
+  },
   createdDate: {
     type: Date,
     default: Date.now

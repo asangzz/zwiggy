@@ -22,12 +22,14 @@ const Footer = () => {
 
         {/* Right Section (Copyright Remarks) */}
         <div className="text-right">
+          
+        
+          
+       
           <p>&copy; 2023 Zwiggy. All rights reserved.</p>
         </div>
       </div>
-      <Link className="nav-link active" to="/restaurantSignup">
-                Restaurent Signup
-              </Link> 
+      
     </footer>
   );
 };

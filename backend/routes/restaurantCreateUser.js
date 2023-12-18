@@ -24,6 +24,8 @@ body('password').isLength({min:5})
         email: req.body.email,
         password: setPassword,
         location: req.body.location,
+        open: req.body.open,
+        close: req.body.close,
         createdDate: Date.now()
     } 
     )
