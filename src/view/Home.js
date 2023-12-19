@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react'  
 import Card from '../components/Card'
+import RestaurantCard from '../components/RestaurantCard';
 
 export default function Home() {
 
   const [foodCategory, setFoodCategory] = useState([]);
   const [foodItem, setFoodItem] = useState([]);
+
+  const [restaurants, setrestaurants] = useState([]);
 
   const loadData = async () => {
     let response = await fetch('http://localhost:4000/api/fooditem',{
@@ -21,8 +24,23 @@ export default function Home() {
     console.log(response[0], response[1])
   }
 
+  const loadRestaurants = async () => {
+    let response = await fetch('http://localhost:4000/api/restaurantusers',{
+      method:"GET",
+      header:{
+        'Content-Type':'application/json'
+      }
+    });
+    response = await response.json()
+
+    setrestaurants(response ) 
+
+ console.log(restaurants )
+  }
+
   useEffect(()=>{
     loadData()
+    loadRestaurants()
   },[])
 
   return (
@@ -68,6 +86,31 @@ export default function Home() {
       </button>
     </div> */}
     
+        <div className='container'>
+        
+              <div className='row mb-3 '>
+                <div  className="fs-3 m-3">
+                  Restaurants
+                  </div>
+                <hr/> 
+                {
+                   restaurants.length !== 0 ? restaurants.map((restaurant)=>{
+                    return(
+                      <div key={restaurant._id} className='col-12 col-md-6 col-lg-3'>
+                      
+                        
+
+                        <RestaurantCard restaurants = {restaurant}/>
+
+                      </div>
+                    )
+                  }): <div> No Such Data Found</div>
+                }
+              </div>
+                 
+          
+        </div>
+
         <div className='container'>
           { (foodCategory.length !== 0)?
              foodCategory.map((data)=>{

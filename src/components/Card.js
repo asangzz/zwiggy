@@ -83,7 +83,7 @@ export default function Card(props) {
       <div className="card mt-3" style={{ width: "16rem", maxHeight: "360px" }}>
         <img src={props.foodItem.img} className="card-img-top" alt="..." style={{ height: "120px", objectFit: "fill" }} />
         <div className="card-body">
-          <h5 className="card-title">{props.foodName}</h5>
+          <h5 className="card-title">{props.foodItem.name}</h5>
           {/* <p className="card-text">This is some random text. This is description.</p> */}
           <div className='container w-100 p-0' style={{ height: "38px" }}>
             <select className="m-2 h-100 w-20 bg-success text-black rounded" style={{ select: "#FF0000" }} onClick={handleClick} onChange={handleQty}>

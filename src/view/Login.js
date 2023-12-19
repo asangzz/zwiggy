@@ -48,11 +48,14 @@ export default function Login() {
         </div>
         
         
-        <button type="submit" className="btn btn-success">Submit</button>
+        <button type="submit" className="btn btn-success">Login</button>
         <Link className="m-3 btn btn-danger" to="/signup">
-                Create a New Account
+                Create your Account
               </Link> 
       </form>
+      <Link className="btn bg-white text-success mx-1" to="/restaurantLogin">
+                 Login as restaurant owner?
+               </Link>
     </div>
 
   </>

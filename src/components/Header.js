@@ -14,6 +14,8 @@ export default function Header() {
   const handleLogout = () => {
     
     localStorage.removeItem("authToken");
+    localStorage.removeItem("rauthToken");
+    localStorage.removeItem('userEmail')
     navigate('/login')
 
   }
@@ -27,12 +29,18 @@ export default function Header() {
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
-        <Link className="navbar-brand fs-1" to="/">
+        {(localStorage.getItem("rauthToken")) ?
+          <a className="navbar-brand fs-1" onClick={() => navigate(`/restaurantFoodItem/${localStorage.getItem("restaurantID")}`)}>
           {/* Center Section (Logo) */}
           <div className='m-50 '>
             <img src="/zwiggy.png" alt="Logo" height="50" />
           </div>
-        </Link>
+        </a>:<Link className="navbar-brand fs-1" to="/">
+          {/* Center Section (Logo) */}
+          <div className='m-50 '>
+            <img src="/zwiggy.png" alt="Logo" height="50" />
+          </div>
+        </Link> }
         <button
           className="navbar-toggler"
           type="button"
@@ -46,15 +54,18 @@ export default function Header() {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav me-auto mb-2">
+
+          {(localStorage.getItem("rauthToken")) ? "":
             <li className="nav-item">
               <Link className="nav-link active" to="/" activeclassname="active">
                 Home
-              </Link>  </li>
+              </Link>  </li>}
             {(localStorage.getItem("authToken")) ?
               <li className="nav-item">
                 <Link className="nav-link active" to="/myorder" activeclassname="active">
                   MyOrders
-                </Link>  </li> : ""
+                </Link>  </li> 
+                : ""
             }
 
 
@@ -64,7 +75,8 @@ export default function Header() {
           <div className='d-flex'>
 
             {(!localStorage.getItem("authToken")) ?
-              <div>
+             
+             (!localStorage.getItem("rauthToken")) ?<div>
                 <Link className="btn bg-white text-success mx-1" to="/login">
                   Login
                 </Link>
@@ -73,32 +85,31 @@ export default function Header() {
                   SignUp
                 </Link>
 
-                <Link className="btn bg-white text-success mx-1" to="/restaurantSignup">
-                 Signup/Signin as restaurant owner?
-               </Link> 
+                
                 
               </div>
               : <div>
-                <div className="btn bg-white text-success mx-2 " onClick={loadCart}>
-                  <FontAwesomeIcon icon={faShoppingCart}  >
 
+                {( localStorage.getItem("rauthToken")  ) ?  <Link className="btn bg-white text-success mx-1" to="/additem">
+                 Add Item +
+               </Link> :
+                  <div className="btn bg-white text-success mx-2 " onClick={loadCart}>
+                  <FontAwesomeIcon icon={faShoppingCart}  > 
                   </FontAwesomeIcon>
                   My Cart {(items.length !== undefined) ? items.length : 0}
-                </div>
+                </div> }
 
                 {cartView ? <Modal onClose={() => setCartView(false)}><Cart></Cart></Modal> : ""}
                 <div className="btn bg-white text-danger mx-1" onClick={handleLogout}>
                   Logout
                 </div>
-              </div>
+              </div>:""
 
 
 
             }
 
-{(localStorage.getItem("restaurantLogin")) ? <Link className="btn bg-white text-success mx-1" to="/additem">
-                 Add Item +
-               </Link>  : ""}
+ 
 
           </div>
 

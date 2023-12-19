@@ -19,7 +19,7 @@ const FoodItemSchema = new Schema({
   description: {
     type: String
   },
-  RestaurantEmail: {
+  RestaurantId: {
     type: String,
     require: true
   }

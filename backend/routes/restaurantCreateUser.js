@@ -22,6 +22,7 @@ body('password').isLength({min:5})
           await RestaurantUser.create({
         name: req.body.name,
         email: req.body.email,
+        logo: req.body.logo,
         password: setPassword,
         location: req.body.location,
         open: req.body.open,

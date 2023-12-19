@@ -1,13 +1,16 @@
 
 import React, { useState , useEffect} from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate,useParams } from 'react-router-dom';
 
-export default function AddItem() {
+export default function EditItem( ) {
+  const { id } = useParams();
 
     const [foodCategory, setFoodCategory] = useState([]);
+
+
    
   
-    const loadData = async () => {
+    const loadCategory = async () => {
       let response = await fetch('http://localhost:4000/api/fooditem',{
         method:"GET",
         header:{
@@ -21,27 +24,47 @@ export default function AddItem() {
   
       console.log(response[0], response[1])
     }
+
+    let existingFormData;
+    const loadExistingData = async () => {
+       let existingData = await fetch(`http://localhost:4000/api/foodid/`,{
+        method:"POST",
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({_id:id})
+      });
+      existingFormData = await existingData.json()
+  
+     // setFoodItem(response[0])
+ 
+   
+    }
+   
   
     useEffect(()=>{
-      loadData()
+      loadCategory()
+      loadExistingData()
     },[])
 
-    const [formData, setFormData] = useState({
+ const [formData, setFormData] = useState({
       CategoryName: '',
       name: '',
       img: '',
       options: [{ varientname: '', varientprice: '' }],
       description: '',
-      RestaurantEmail: localStorage.getItem('restaurantEmail')
+      RestaurantId: localStorage.getItem('restaurantID')
     });
 
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+
+    let response;
     try {
-      await fetch('http://localhost:4000/api/createfooditem', {
-        method: 'POST',
+       response =  await fetch('http://localhost:4000/api/editfooditem', {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -50,21 +73,25 @@ export default function AddItem() {
 
       // Handle success, e.g., show a success message or redirect
       console.log('Food item created successfully');
+
+      
+
+
     } catch (error) {
       // Handle error, e.g., show an error message
       console.error('Error creating food item', error);
     }
 
     // console.log(itemdetails)
-    // const json = await response.json()
+   const json = await response.json()
     // console.log(json)
     // if (!json.success) {
     //   alert("Enter Valid Credentails")
     // }
 
-    // if (json.success) { 
-    //   navigate("/")
-    // }
+    if (json.success) { 
+      navigate("/")
+    }
   };
 
   
@@ -94,8 +121,9 @@ export default function AddItem() {
   }
   return (
     <>
-    <h4>Add Item</h4>
+    
       <div className='container'>
+      <h4 className='mt-3 mb-3'>Add a Food Item</h4>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="name" className="form-label">Item Name</label>
@@ -126,29 +154,35 @@ export default function AddItem() {
           </option>
         ))}
       </select>
-     
+     <div className='mt-4'>
       <label>
-        Options:
-        {formData.options.map((option, index) => (
-          <div key={index}>
+      Add Varient
+        
+           {formData.options.map((option, index) => (
+          <div key={index} className='mt-2'>
             <input
               type="text"
-              name="varientname"
+              name="varientname" 
+              placeholder="Enter variant name"
               value={option.varientname}
               onChange={(e) => handleOptionChange(index, e)}
             />
             <input
               type="text"
               name="varientprice"
+              placeholder="Enter variant price"
               value={option.varientprice}
               onChange={(e) => handleOptionChange(index, e)}
             />
           </div>
-        ))}
-        <button type="button" onClick={handleAddOption }>
+        ))} </label>
+        </div>
+        
+       
+        <button className="mt-2 mb-3 btn btn-outline-success" type="button" onClick={handleAddOption }>
           Add Option
         </button>
-      </label>
+     
       
           {/* <div className="mb-3">
             <label htmlFor="email" className="form-label">Price</label>

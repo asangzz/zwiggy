@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 export default function SignUp() {
 
-  const [credentials, setcredentails] = useState({ name: "", email: "", password: "", geolocation: "", open: '07:00',close: '23:00' });
+  const [credentials, setcredentails] = useState({ name: "", email: "", logo: "", password: "", geolocation: "", open: '07:00',close: '23:00' });
 
 
   const navigate = useNavigate();
@@ -15,21 +15,24 @@ export default function SignUp() {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ name: credentials.name, email: credentials.email, password: credentials.password, location: credentials.geolocation, open: credentials.open, close: credentials.close })
+      body: JSON.stringify({ name: credentials.name, email: credentials.email, logo: credentials.logo,  password: credentials.password, location: credentials.geolocation, open: credentials.open, close: credentials.close })
 
-    })
+    }) 
 
-    console.log(credentials)
+    
     const json = await response.json()
+  
+
+
     console.log(json)
     if (!json.success) {
       alert("Enter Valid Credentails")
     }
 
-    if (json.success) {
-      localStorage.setItem('restaurantEmail', credentials.email)
-      localStorage.setItem("authToken", json.authToken)
-      navigate("/addItem")
+
+
+    if (json.success) { 
+      navigate("/restaurantLogin")
     }
   };
   const onChange = (event) => {
@@ -38,7 +41,7 @@ export default function SignUp() {
   return (
     <>
       <div className='container'>
-        <h4>Restaurant Signup</h4>
+        <h4 className='mt-3 mb-3'>Restaurant Signup</h4>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="name" className="form-label">Restaurant Name</label>
@@ -48,6 +51,10 @@ export default function SignUp() {
             <label htmlFor="email" className="form-label">Email address</label>
             <input type="email" className="form-control" name='email' value={credentials.email} onChange={onChange} />
             <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="name" className="form-label">Logo URL</label>
+            <input type="text" className="form-control" name='logo' value={credentials.logo} onChange={onChange} />
           </div>
           <div className="mb-3">
             <label htmlFor="password" className="form-label">Password</label>
@@ -73,6 +80,7 @@ export default function SignUp() {
             Restaurant already registered?
           </Link>
         </form>
+        
       </div>
 
     </>

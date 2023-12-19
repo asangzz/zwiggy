@@ -63,6 +63,9 @@ export default function SignUp() {
                 Already an account
               </Link> 
         </form>
+        <Link className="btn bg-white text-success mx-1" to="/restaurantSignup">
+                 Signup as restaurant owner?
+               </Link>
       </div>
 
     </>

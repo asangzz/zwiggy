@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react' 
 
-export default function MyOrder() {
+export default function RestaurentOrder() {
 
     const [orderData, setorderData] = useState({})
 

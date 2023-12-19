@@ -14,15 +14,7 @@ body('name').isLength({min:5})
 
     
     try {
-    //       await FoodItem.create({
-    //     CategoryName: req.body.CategoryName,
-    //     name: req.body.name, 
-    //     img: req.body.img,
-    //     option: req.body.option,
-    //     description: req.body.description,
-    //     RestaurantEmail: req.body.RestaurantEmail
-    // } 
-    // )
+    
     const newFoodItem = new FoodItem(req.body);
 
     // Save the new food item to the database

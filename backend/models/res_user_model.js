@@ -6,7 +6,12 @@ const RestaurantUserSchema = new Schema({
   name: {
     type: String,
     required: true
-  }, email: {
+  }, 
+  email: {
+    type: String,
+    required: true
+  },
+  logo: {
     type: String,
     required: true
   },
@@ -22,7 +27,7 @@ const RestaurantUserSchema = new Schema({
     type: String,
     required: true
   },
-  close:{
+  close: {
     type: String,
     required: true
   },
