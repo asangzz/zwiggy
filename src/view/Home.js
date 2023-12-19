@@ -84,7 +84,7 @@ export default function Home() {
                       <div key={filterItems._id} className='col-12 col-md-6 col-lg-3'>
                         <Card 
                         foodItem = {filterItems}
-                       options={filterItems.options[0]}
+                       options={filterItems.options[0] }
                         ></Card> 
                       </div>
                     )

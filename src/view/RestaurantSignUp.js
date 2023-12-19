@@ -29,7 +29,7 @@ export default function SignUp() {
     if (json.success) {
       localStorage.setItem('restaurantEmail', credentials.email)
       localStorage.setItem("authToken", json.authToken)
-      navigate("/")
+      navigate("/addItem")
     }
   };
   const onChange = (event) => {
