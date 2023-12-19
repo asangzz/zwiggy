@@ -20,7 +20,7 @@ export default function Card(props) {
   let foodItem = props.item;
   const dispatch = useDispatchCart();
   const handleClick = () => {
-    if (!localStorage.getItem("token")) {
+    if (!localStorage.getItem("authToken")) {
       navigate("/login")
     }
   }
@@ -49,14 +49,14 @@ export default function Card(props) {
         return
       }
       else if (food.size !== size) {
-        await dispatch({ type: "ADD", id: props.foodItem._id, name: props.foodItem.name, price: finalPrice, qty: qty, size: size,img: props.ImgSrc })
+        await dispatch({ type: "ADD", id: props.foodItem._id, name: props.foodItem.name, price: finalPrice, qty: qty, size: size,img: props.foodItem.img })
         console.log("Size different so simply ADD one more to the list")
         return
       }
       return
     }
 
-    await dispatch({ type: "ADD", id: props.foodItem._id, name: props.foodItem.name, price: finalPrice, qty: qty, size: size })
+    await dispatch({ type: "ADD", id: props.foodItem._id, name: props.foodItem.name, price: finalPrice, qty: qty, size: size,img: props.foodItem.img })
 
 
     // setBtnEnable(true)
