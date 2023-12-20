@@ -90,7 +90,7 @@ export default function EditItem( ) {
     // }
 
     if (json.success) { 
-      navigate("/")
+      navigate(`/restaurantFoodItem/${localStorage.getItem("restaurantID")}`)
     }
   };
 
@@ -123,7 +123,7 @@ export default function EditItem( ) {
     <>
     
       <div className='container'>
-      <h4 className='mt-3 mb-3'>Add a Food Item</h4>
+      <h4 className='mt-3 mb-3'>Edit the Food Item</h4>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="name" className="form-label">Item Name</label>

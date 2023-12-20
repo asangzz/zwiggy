@@ -12,7 +12,7 @@ export default function Header() {
   localStorage.setItem('temp', "first")
   const navigate = useNavigate();
   const handleLogout = () => {
-    
+
     localStorage.removeItem("authToken");
     localStorage.removeItem("rauthToken");
     localStorage.removeItem('userEmail')
@@ -31,16 +31,16 @@ export default function Header() {
       <div className="container-fluid">
         {(localStorage.getItem("rauthToken")) ?
           <a className="navbar-brand fs-1" onClick={() => navigate(`/restaurantFoodItem/${localStorage.getItem("restaurantID")}`)}>
-          {/* Center Section (Logo) */}
-          <div className='m-50 '>
-            <img src="/zwiggy.png" alt="Logo" height="50" />
-          </div>
-        </a>:<Link className="navbar-brand fs-1" to="/">
-          {/* Center Section (Logo) */}
-          <div className='m-50 '>
-            <img src="/zwiggy.png" alt="Logo" height="50" />
-          </div>
-        </Link> }
+            {/* Center Section (Logo) */}
+            <div className='m-50 '>
+              <img src="/zwiggy.png" alt="Logo" height="50" />
+            </div>
+          </a> : <Link className="navbar-brand fs-1" to="/">
+            {/* Center Section (Logo) */}
+            <div className='m-50 '>
+              <img src="/zwiggy.png" alt="Logo" height="50" />
+            </div>
+          </Link>}
         <button
           className="navbar-toggler"
           type="button"
@@ -55,17 +55,27 @@ export default function Header() {
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav me-auto mb-2">
 
-          {(localStorage.getItem("rauthToken")) ? "":
-            <li className="nav-item">
-              <Link className="nav-link active" to="/" activeclassname="active">
-                Home
-              </Link>  </li>}
+            {(localStorage.getItem("rauthToken")) ? "" :
+              <li className="nav-item">
+                <Link className="nav-link active" to="/" activeclassname="active">
+                  Home
+                </Link>  </li>}
             {(localStorage.getItem("authToken")) ?
               <li className="nav-item">
                 <Link className="nav-link active" to="/myorder" activeclassname="active">
                   MyOrders
-                </Link>  </li> 
-                : ""
+                </Link> 
+                <div className="btn bg-white text-success mx-2 " onClick={loadCart}>
+                      <FontAwesomeIcon icon={faShoppingCart}  >
+                      </FontAwesomeIcon>
+                      My Cart {(items.length !== undefined) ? items.length : 0}
+                    </div>
+                <div className="btn bg-white text-danger mx-1" onClick={handleLogout}>
+                    Logout
+                  </div>
+                 </li>
+                
+              : ""
             }
 
 
@@ -74,42 +84,47 @@ export default function Header() {
           {/* Right Section (Login) - Included in the collapsible div */}
           <div className='d-flex'>
 
-            {(!localStorage.getItem("authToken")) ?
-             
-             (!localStorage.getItem("rauthToken")) ?<div>
+            {(!localStorage.getItem("authToken")) 
+            
+            ? (!localStorage.getItem("rauthToken")) ? 
+              <div>
                 <Link className="btn bg-white text-success mx-1" to="/login">
                   Login
                 </Link>
 
                 <Link className="btn bg-white text-success mx-1" to="/signup">
                   SignUp
-                </Link>
-
-                
-                
+                </Link> 
               </div>
-              : <div>
+                : <div>
 
-                {( localStorage.getItem("rauthToken")  ) ?  <Link className="btn bg-white text-success mx-1" to="/additem">
-                 Add Item +
-               </Link> :
-                  <div className="btn bg-white text-success mx-2 " onClick={loadCart}>
-                  <FontAwesomeIcon icon={faShoppingCart}  > 
-                  </FontAwesomeIcon>
-                  My Cart {(items.length !== undefined) ? items.length : 0}
-                </div> }
+                  {(localStorage.getItem("rauthToken")) ?
+                  <div className='d-flex'>
+                    <Link className="btn bg-white text-success mx-1" to="/restaurantOrder">
+                    Orders
+                  </Link> 
+                  <Link className="btn bg-white text-success mx-1" to="/additem">
+                    Add Item +
+                  </Link> 
+                  <div className="btn bg-white text-danger mx-1" onClick={handleLogout}>
+                    Logout
+                  </div>
+                  </div>
+                   :
+                   <div>
+                    
+                  </div>
+                    }
 
-                {cartView ? <Modal onClose={() => setCartView(false)}><Cart></Cart></Modal> : ""}
-                <div className="btn bg-white text-danger mx-1" onClick={handleLogout}>
-                  Logout
-                </div>
-              </div>:""
+                  {cartView ? <Modal onClose={() => setCartView(false)}><Cart></Cart></Modal> : ""}
+                 
+                </div> : ""
 
 
 
             }
 
- 
+
 
           </div>
 

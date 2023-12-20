@@ -26,11 +26,14 @@ export default function AddItem() {
       loadData()
     },[])
 
+ 
+   
+
     const [formData, setFormData] = useState({
       CategoryName: '',
       name: '',
       img: '',
-      options: [{ varientname: '', varientprice: '' }],
+      options: [   ],
       description: '',
       RestaurantId: localStorage.getItem('restaurantID')
     });
@@ -69,28 +72,63 @@ export default function AddItem() {
     // }
 
     if (json.success) { 
-      navigate("/")
+      navigate(`/restaurantFoodItem/${localStorage.getItem("restaurantID")}`)
     }
   };
 
   
 
-  const handleOptionChange = (index, e) => {
-    const { name, value } = e.target;
+  // const handleOptionChange = (index,key, e) => {
+  //   const {  key , value } = e.target;
+  //   setFormData((prevData) => {
+  //     const newOptions = [...prevData.options];
+  //     newOptions[index][[key]] = value;
+  //     return {
+  //       ...prevData,
+  //       options: newOptions,
+  //     };
+  //   });
+  // };
+  const handleOptionChange = (index, key, value) => {
     setFormData((prevData) => {
-      const newOptions = [...prevData.options];
-      newOptions[index][name] = value;
+     const newOptions = [...prevData.options];
+      newOptions[index] = { [key] : value } ;
+
+      // let mergedOptions = newOptions.reduce((acc, option) => ({ ...acc, ...option }), {});
+        
       return {
         ...prevData,
+       // mergedOptions: mergedOptions,
         options: newOptions,
+        
       };
-    });
+    }); 
   };
+
+  // const handleOptionChange = (index, key, value) => {
+  //   setFormData((prevData) => {
+  //     const newOptions = [...prevData.options];
+  //     newOptions[index] = {
+  //       ...newOptions[index],
+  //       [key]: value,
+  //     };
+  //     return {
+  //       ...prevData,
+  //       options: newOptions,
+  //     };
+  //   });
+  // };
+  // const handleOptionChange = (key, value) => {
+  //   setFormData((prevFormData) => {
+  //     const updatedOptions = [{ [key]: value }]; // Using dynamic key
+  //     return { ...prevFormData, options: updatedOptions };
+  //   });
+  // };
 
   const handleAddOption = () => {
     setFormData((prevData) => ({
       ...prevData,
-      options: [...prevData.options, { varientname: '', varientprice: '' }],
+      options: [...prevData.options, {  }],
     }));
   };
 
@@ -138,21 +176,21 @@ export default function AddItem() {
       Add Varient
         
            {formData.options.map((option, index) => (
-          <div key={index} className='mt-2'>
+          <div   className='mt-2'>
             <input
-              type="text"
-              name="varientname" 
-              placeholder="Enter variant name"
-              value={option.varientname}
-              onChange={(e) => handleOptionChange(index, e)}
-            />
-            <input
-              type="text"
-              name="varientprice"
-              placeholder="Enter variant price"
-              value={option.varientprice}
-              onChange={(e) => handleOptionChange(index, e)}
-            />
+            type="text"
+            placeholder="Size"
+            value={    Object.keys(option)[0] || ''  }
+            onChange={(e) => handleOptionChange(index, e.target.value, option[Object.keys(option)[0]])}
+          />
+          
+          
+          <input
+            type="text"
+            placeholder="Price"
+            value={option[Object.keys(option)[0]] || ''}
+            onChange={(e) => handleOptionChange(index, Object.keys(option)[0], e.target.value)}
+          />
           </div>
         ))} </label>
         </div>

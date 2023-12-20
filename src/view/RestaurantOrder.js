@@ -6,7 +6,7 @@ export default function RestaurentOrder() {
 
     const fetchMyOrder = async () => {
         console.log(localStorage.getItem('restaurantEmail'))
-        await fetch("http://localhost:4000/api/RestaurentOrderData", {
+        await fetch("http://localhost:4000/api/restaurantOrderData", {
             // credentials: 'include',
             // Origin:"http://localhost:3000/login",
             method: 'POST',
@@ -14,7 +14,8 @@ export default function RestaurentOrder() {
                 'Content-Type': 'application/json'
             },
             body:JSON.stringify({
-                email:localStorage.getItem('restaurantEmail')
+              email:localStorage.getItem('restaurantEmail'),
+                order_data:[{RestaurantId :localStorage.getItem('restaurantID') }]
             })
         }).then(async (res) => {
             let response = await res.json()
