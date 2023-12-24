@@ -1,32 +1,32 @@
 const express = require('express')
 const router = express.Router()  
-const Order = require('../models/Orders'); 
+const Order = require('../models/Orders');  
 
 router.post('/restaurantOrderData', async (req, res) => {
+ 
+
     try {
-        const restaurantId = req.body.RestaurantId;
+        const { restaurantId } = req.body;
 
-        // Use findOne to find an order with the specified RestaurantId
-        const existingOrder = await Order.findOne({ 'RestaurantId': restaurantId });
-console.log(existingOrder)
-        if (existingOrder) {
-            // If the order exists, retrieve the filtered order_data
-            const filteredOrderData = existingOrder.order_data ? existingOrder.order_data.filter(
-                item => item.RestaurantId === restaurantId
-            ) : [];
-            
-            console.log('Filtered Order Data:', filteredOrderData);
-            // Your further logic here
+        // Find orders that match the RestaurantId
+        const orders = await Order.find({
+            'order_data': {
+                $elemMatch: {
+                    $elemMatch: { 'RestaurantId': restaurantId }
+                }
+            }
+        });
 
-            res.json({ success: true, filteredOrderData });
-        } else {
-            // If no order with the specified RestaurantId is found
-            console.log('No matching order found');
-            res.json({ success: true, filteredOrderData: [] });
-        }
+        // Filter out order_data that doesn't have the specified RestaurantId
+        const filteredOrders = orders.map(order => ({
+            ...order.toObject(),
+            order_data: order.order_data.filter(item => item.some(i => i.RestaurantId === restaurantId))
+        }));
+
+        res.json({ orderData: filteredOrders });
     } catch (error) {
-        console.error(error.message);
-        res.status(500).json({ error: 'Server Error' });
+        res.status(500).json({ error: error.message });
     }
 });
-module.exports = router
+
+module.exports = router;
