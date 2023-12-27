@@ -18,6 +18,7 @@ const  Order = ({ orderData }) => {
                 <p>Quantity: {item.qty}</p>
                 <p>Size: {item.size}</p>
                 <p>Price: {item.price}</p>
+                <p>Status: {item.orderConfirmation ? <p className='text-success'>  Accepted </p> : <p className='text-danger'>  Pending </p>}</p>
               </div>
             ))}
           </div>
