@@ -45,11 +45,11 @@ export default function Card(props) {
     console.log(new Date())
     if (food.length !== 0) {
       if (food.size === size) {
-        await dispatch({ type: "UPDATE", id: props.foodItem._id, price: finalPrice, qty: qty })
+        await dispatch({ type: "UPDATE", id: props.foodItem._id, price: finalPrice, qty: qty, orderConfirmation: false })
         return
       }
       else if (food.size !== size) {
-        await dispatch({ type: "ADD", id: props.foodItem._id, name: props.foodItem.name, price: finalPrice, qty: qty, size: size,img: props.foodItem.img, RestaurantId: props.foodItem.RestaurantId  })
+        await dispatch({ type: "ADD", id: props.foodItem._id, name: props.foodItem.name, price: finalPrice, qty: qty, size: size,img: props.foodItem.img, RestaurantId: props.foodItem.RestaurantId, orderConfirmation: false })
         console.log("Size different so simply ADD one more to the list")
         
         return
@@ -57,7 +57,7 @@ export default function Card(props) {
       return
     }
 
-    await dispatch({ type: "ADD", id: props.foodItem._id, name: props.foodItem.name, price: finalPrice, qty: qty, size: size,img: props.foodItem.img, RestaurantId: props.foodItem.RestaurantId  })
+    await dispatch({ type: "ADD", id: props.foodItem._id, name: props.foodItem.name, price: finalPrice, qty: qty, size: size,img: props.foodItem.img, RestaurantId: props.foodItem.RestaurantId, orderConfirmation: false  })
 
 
     // setBtnEnable(true)

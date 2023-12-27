@@ -10,6 +10,7 @@ app.use((req,res,next)=>{
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
   );
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE"); // Add PUT here
   next();
 })
 
@@ -37,6 +38,7 @@ app.use('/api', require("./routes/restaurantCreateUser"))
 app.use('/api', require("./routes/restaurantVerifyUser"))
 app.use('/api', require("./routes/restaurantusers"))
 app.use('/api', require("./routes/restaurantusersId"))
+app.use('/api', require("./routes/updateOrderConfirmation"))
 
 app.listen(4000)
 
