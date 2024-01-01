@@ -5,8 +5,28 @@ import { Link, useNavigate,useParams } from 'react-router-dom';
 export default function EditItem( ) {
   const { id } = useParams();
 
-    const [foodCategory, setFoodCategory] = useState([]);
 
+    const [foodCategory, setFoodCategory] = useState([]);
+    const [url, setUrl] = useState("");
+    const [image, setImage] = useState("");
+    const uploadImage = () => {
+      const data = new FormData()
+      data.append("file", image)
+      data.append("upload_preset", "zwiggy")
+      data.append("cloud_name", "dtfwvp3gs")
+      fetch("  https://api.cloudinary.com/v1_1/dtfwvp3gs/image/upload", {
+        method: "post",
+        body: data
+      })
+        .then(resp => resp.json())
+        .then(data => {
+          
+          setUrl(data.url)
+          setFormData({ ...formData, img: data.url });
+          console.log(url)
+        })
+        .catch(err => console.log(err))
+    }
 
    
   
@@ -48,10 +68,11 @@ export default function EditItem( ) {
     },[])
 
  const [formData, setFormData] = useState({
+      _id: id,
       CategoryName: '',
       name: '',
       img: '',
-      options: [{ varientname: '', varientprice: '' }],
+      options: [],
       description: '',
       RestaurantId: localStorage.getItem('restaurantID')
     });
@@ -96,14 +117,18 @@ export default function EditItem( ) {
 
   
 
-  const handleOptionChange = (index, e) => {
-    const { name, value } = e.target;
+  const handleOptionChange = (index, key, value) => {
     setFormData((prevData) => {
       const newOptions = [...prevData.options];
-      newOptions[index][name] = value;
+      newOptions[index] = { [key]: value };
+
+      // let mergedOptions = newOptions.reduce((acc, option) => ({ ...acc, ...option }), {});
+
       return {
         ...prevData,
+        // mergedOptions: mergedOptions,
         options: newOptions,
+
       };
     });
   };
@@ -131,9 +156,28 @@ export default function EditItem( ) {
             <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
           </div>
 
-          <div className="mb-3">
+          {/* <div className="mb-3">
             <label htmlFor="img" className="form-label">Image Url</label>
             <input type="text" className="form-control" name='img' value={formData.img} onChange={onChange} />
+          </div> */}
+
+<div>
+            <input name='img' type="file" value={formData.url}
+            //onChange={(e) => setImage(e.target.files[0])}
+            onChange={(e) =>{
+              setImage(e.target.files[0])
+              // setFormData({ ...formData, img: url })
+            }
+
+               }
+            >
+
+            </input>
+            <button className='mt-2 mb-3 btn btn-outline-success' type="button" onClick={uploadImage}>Upload</button>
+          </div>
+          <div className='mt-2'>
+            <p>Uploaded image will be displayed here</p>
+            <img src={url} />
           </div>
  
 
@@ -158,24 +202,24 @@ export default function EditItem( ) {
       <label>
       Add Varient
         
-           {formData.options.map((option, index) => (
-          <div key={index} className='mt-2'>
-            <input
-              type="text"
-              name="varientname" 
-              placeholder="Enter variant name"
-              value={option.varientname}
-              onChange={(e) => handleOptionChange(index, e)}
-            />
-            <input
-              type="text"
-              name="varientprice"
-              placeholder="Enter variant price"
-              value={option.varientprice}
-              onChange={(e) => handleOptionChange(index, e)}
-            />
-          </div>
-        ))} </label>
+      {formData.options.map((option, index) => (
+                <div className='mt-2'>
+                  <input
+                    type="text"
+                    placeholder="Size"
+                    value={Object.keys(option)[0] || ''}
+                    onChange={(e) => handleOptionChange(index, e.target.value, option[Object.keys(option)[0]])}
+                  />
+
+
+                  <input
+                    type="text"
+                    placeholder="Price"
+                    value={option[Object.keys(option)[0]] || ''}
+                    onChange={(e) => handleOptionChange(index, Object.keys(option)[0], e.target.value)}
+                  />
+                </div>
+              ))} </label>
         </div>
         
        

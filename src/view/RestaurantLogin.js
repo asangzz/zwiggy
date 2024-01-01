@@ -70,7 +70,7 @@ export default function Login() {
         
         
         <button type="submit" className="btn btn-success">Login</button>
-        <Link className="m-3 btn btn-danger" to="/signup">
+        <Link className="m-3 btn btn-danger" to="/restaurantsignup">
                 Register Your Restaurant
               </Link> 
       </form>

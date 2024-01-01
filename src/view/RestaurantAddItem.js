@@ -193,10 +193,10 @@ export default function AddItem() {
             >
 
             </input>
-            <button type="button" onClick={uploadImage}>Upload</button>
+            <button className='mt-2 mb-3 btn btn-outline-success' type="button" onClick={uploadImage}>Upload</button>
           </div>
-          <div>
-            <h1>Uploaded image will be displayed here</h1>
+          <div className='mt-2'>
+            <p>Uploaded image will be displayed here</p>
             <img src={url} />
           </div>
 

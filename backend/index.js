@@ -21,6 +21,14 @@ app.get('/', (req, res) => {
 
 app.use(express.json())
 
+const { swaggerServe, swaggerSetup } = require('./config')
+  
+app.get("/",(res,resp)=>{ 
+    resp.send('results'); 
+});
+
+app.use("/api-docs", swaggerServe, swaggerSetup);
+
 app.use('/api', require("./routes/createUser"))
 app.use('/api', require("./routes/verifyUser"))
 app.use('/api', require("./routes/users"))
