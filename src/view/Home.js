@@ -55,8 +55,12 @@ export default function Home() {
         style={{ objectFit: "contain !important" }}
       >
         <div className="carousel-inner" id="carousel">
+        
           <div className="carousel-caption" style={{ zIndex: "10" }}>
+           <h1  >Get the best Quality Food only on Zwiggy</h1> 
+         
             <form className="d-flex justify-content-center">
+              
               <input
                 className="form-control me-2"
                 type="search"
