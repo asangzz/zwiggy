@@ -4,6 +4,8 @@ import RestaurantCard from '../components/RestaurantCard';
 
 export default function Home() {
 
+  const [search, setSearch] = useState('');
+
   const [foodCategory, setFoodCategory] = useState([]);
   const [foodItem, setFoodItem] = useState([]);
 
@@ -46,70 +48,83 @@ export default function Home() {
   return (
     <>  
    {/* Carousel */}
-    {/* <div id="carouselExampleCaptions" className="carousel slide" data-bs-ride="carousel">
-      
-      <div className="carousel-indicators"><form className="d-flex">
-        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button className="btn btn-outline-success" type="submit">Search</button>
-      </form> 
-      </div>
-      <div className="carousel-inner">
-        <div className="carousel-item active">
-          <img src="https://cdn.pixabay.com/photo/2023/10/08/13/03/ai-generated-8302143_960_720.jpg" className="d-block w-100" alt="Slide 1" />
-          <div className="carousel-caption d-none d-md-block">
-            <h5>First slide label</h5>
-            <p>Some representative placeholder content for the first slide.</p>
+   <div
+        id="carouselExampleFade"
+        className="carousel slide carousel-fade"
+        data-bs-ride="carousel"
+        style={{ objectFit: "contain !important" }}
+      >
+        <div className="carousel-inner" id="carousel">
+          <div className="carousel-caption" style={{ zIndex: "10" }}>
+            <form className="d-flex justify-content-center">
+              <input
+                className="form-control me-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+                value={search} onChange={(e)=> {setSearch(e.target.value)}}
+              />
+              {/* <button
+                className="btn btn-outline-success text-white bg-success"
+                type="submit"
+              >
+                Search
+              </button> */}
+            </form>
+          </div>
+
+          <div className="carousel-item active">
+            <img
+              src="https://source.unsplash.com/random/900×700/?burger"
+              className="d-block w-100"
+              style={{ filter: "brightness(30%)" }}
+              alt="..."
+            />
+          </div>
+          <div className="carousel-item">
+            <img
+              src="https://source.unsplash.com/random/900×700/?pizza"
+              className="d-block w-100"
+              style={{ filter: "brightness(30%)" }}
+              alt="..."
+            />
+          </div>
+          <div className="carousel-item">
+            <img
+              src="https://source.unsplash.com/random/900×700/?meat"
+              className="d-block w-100"
+              style={{ filter: "brightness(30%)" }}
+              alt="..."
+            />
           </div>
         </div>
-        <div className="carousel-item">
-          <img src="https://cdn.pixabay.com/photo/2023/10/08/13/03/ai-generated-8302143_960_720.jpg" className="d-block w-100" alt="Slide 2" />
-          <div className="carousel-caption d-none d-md-block">
-            <h5>Second slide label</h5>
-            <p>Some representative placeholder content for the second slide.</p>
-          </div>
-        </div>
-        <div className="carousel-item">
-          <img src="https://cdn.pixabay.com/photo/2023/10/08/13/03/ai-generated-8302143_960_720.jpg" className="d-block w-100" alt="Slide 3" />
-          <div className="carousel-caption d-none d-md-block">
-            <h5>Third slide label</h5>
-            <p>Some representative placeholder content for the third slide.</p>
-          </div>
-        </div>
-      </div>
-      <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span className="visually-hidden">Previous</span>
-      </button>
-      <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-        <span className="carousel-control-next-icon" aria-hidden="true"></span>
-        <span className="visually-hidden">Next</span>
-      </button>
-    </div> */}
+        <button
+          className="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleFade"
+          data-bs-slide="prev"
+        >
+          <span
+            className="carousel-control-prev-icon"
+            aria-hidden="true"
+          ></span>
+          <span className="visually-hidden">Previous</span>
+        </button>
+        <button
+          className="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleFade"
+          data-bs-slide="next"
+        >
+          <span
+            className="carousel-control-next-icon"
+            aria-hidden="true"
+          ></span>
+          <span className="visually-hidden">Next</span>
+        </button>
+      </div>  
     
-        <div className='container'>
-        
-              <div className='row mb-3 '>
-                <div  className="fs-3 m-3">
-                  Restaurants
-                  </div>
-                <hr/> 
-                {
-                   restaurants.length !== 0 ? restaurants.map((restaurant)=>{
-                    return(
-                      <div key={restaurant._id} className='col-12 col-md-6 col-lg-3'>
-                      
-                        
 
-                        <RestaurantCard restaurants = {restaurant}/>
-
-                      </div>
-                    )
-                  }): <div> No Such Data Found</div>
-                }
-              </div>
-                 
-          
-        </div>
 
         <div className='container'>
           { (foodCategory.length !== 0)?
@@ -121,7 +136,7 @@ export default function Home() {
                   </div>
                 <hr/> 
                 {
-                   foodItem.length !== 0 ? foodItem.filter((item)=> item.CategoryName === data.CategoryName)
+                   foodItem.length !== 0 ? foodItem.filter((item)=> item.CategoryName === data.CategoryName && (item.name.toLowerCase().includes(search.toLocaleLowerCase()))) 
                   .map(filterItems=>{
                     return(
                       <div key={filterItems._id} className='col-12 col-md-6 col-lg-3'>
@@ -139,6 +154,29 @@ export default function Home() {
           }
           
         </div>
+
+        <div className='container'>
+        
+        <div className='row mb-3 '>
+          <div  className="fs-3 m-3">
+            Restaurants
+            </div>
+          <hr/> 
+          {
+             restaurants.length !== 0 ? restaurants.map((restaurant)=>{
+              return(
+                <div key={restaurant._id} className='col-12 col-md-6 col-lg-3'>
+                
+                  
+
+                  <RestaurantCard restaurants = {restaurant}/>
+
+                </div>
+              )
+            }): <div> No Such Data Found</div>
+          }
+        </div> 
+  </div>
         
      
     
