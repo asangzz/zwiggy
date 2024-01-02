@@ -33,10 +33,14 @@ paths:
     get:
       tags:
           - Users
-      summary: to get all food category 
+      summary: to get all users 
       responses: 
         '200':
-          description: OK
+          description: OK 
+        '404':
+          description: Server Error
+        default:
+          description: Unexpected error
 
   /api/createUser: 
     post:
@@ -61,6 +65,12 @@ paths:
       responses: 
         '200':
           description: OK
+        '400':
+          description: Error Bad Request
+        '404':
+          description: Server Error
+        default:
+          description: Unexpected error
     
   /api/verifyUser: 
     post:
@@ -81,55 +91,38 @@ paths:
       responses: 
         '200':
           description: OK
+        '400':
+          description: Error Bad Request
+        '404':
+          description: Server Error
+        default:
+          description: Unexpected error
     
 
     
 
 
-  /api/restaurantusers: 
+
+
+  /api/fooditem: 
     get:
       tags:
-          - Resturant Orders
-      summary: Returns all restaurant users.
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          description: Parameter description in CommonMark or HTML.
-          schema:
-            # type : integer
-            # format: int64
-            type: string
-            example: "Users String"
-            minimum: 1
+          - Food Item
+      summary: to get all food Item 
       responses: 
         '200':
-          description: OK
-  
-  /api/restaurantusersId: 
-    post:
-      tags:
-          - Resturant Orders
-      summary: Returns a user details by ID.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                email:
-                  type: string
-      responses: 
-        '200':
-          description: OK
+          description: OK 
+        '404':
+          description: Server Error
+        default:
+          description: Unexpected error
 
 
-  /api/fooditem:
+  /api/createfooditem:
     post:
       tags:
         - Food Item  
-      summary: Returns a user list. 
+      summary: to create a Food Item. 
       description: <b> Request :- </b> <br /> <br />
               <b> page_no* </b>  is required <br /> 
               <b> status* </b>  is required <br /> 
@@ -145,31 +138,191 @@ paths:
       requestBody:
         required: true
         content:
-          multipart/form-data:
-           #application/json:
+          # multipart/form-data:
+           application/json:
             schema:
               type: object
               properties: 
-                page_no:         
-                  type: integer
-                  example: 1  
-                type:       
+                CategoryName:         
                   type: string
-                  example: "A" 
-                status:
-                  type: integer
-                  example: 0
-                fileName:
+                name:       
+                  type: string
+                img:
+                  type: string
+                options:
                   type: string 
-                  format: binary
-         
-      responses:
+                RestaurantId:
+                  type: string 
+      responses: 
         '200':
-          description: A user object. 
+          description: OK
         '400':
-          description: The specified user ID is invalid (not a number).
+          description: Error Bad Request
         '404':
-          description: A user with the specified ID was not found.
+          description: Server Error
+        default:
+          description: Unexpected error
+
+
+  /api/editfooditem:
+    post:
+      tags:
+        - Food Item  
+      summary: to edit a Food Item. 
+      description: <b> Request :- </b> <br /> <br />
+              <b> page_no* </b>  is required <br /> 
+              <b> status* </b>  is required <br /> 
+              <b> type* </b>  is required <br /> 
+
+      parameters:
+        - in: query
+          name: month_year
+          schema:
+            #type: integer
+            example: 2022-10        
+      post:
+      requestBody:
+        required: true
+        content:
+          # multipart/form-data:
+           application/json:
+            schema:
+              type: object
+              properties: 
+                name:       
+                  type: string
+                CategoryName:         
+                  type: string
+                img:
+                  type: string
+                description:
+                  type: string 
+                options:
+                  type: string 
+      responses: 
+        '200':
+          description: OK
+        '400':
+          description: Error Bad Request
+        '404':
+          description: Server Error
+        default:
+          description: Unexpected error
+
+
+  /api/foodid: 
+    post:
+      tags:
+          - Food Item
+      summary: to display the item details 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                _id:
+                  type: string
+                # foodItem:
+                #   type: string
+      responses: 
+        '200':
+          description: OK
+        '400':
+          description: Error Bad Request
+        '404':
+          description: Server Error
+        default:
+          description: Unexpected error
+
+
+  /api/fooditemid: 
+    post:
+      tags:
+          - Food Item
+      summary: to display Resturant menu by Restaurant ID 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                restaurantId:
+                  type: string
+                # foodItem:
+                #   type: string
+      responses: 
+        '200':
+          description: OK
+        '400':
+          description: Error Bad Request
+        '404':
+          description: Server Error
+        default:
+          description: Unexpected error
+
+
+  /api/myOrderData: 
+    post:
+      tags:
+          - Food Item
+      summary: to display order by user email
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+      responses: 
+        '200':
+          description: OK
+        '400':
+          description: Error Bad Request
+        '404':
+          description: Server Error
+        default:
+          description: Unexpected error
+
+
+  /api/restaurantOrderData: 
+    post:
+      tags:
+          - Food Item
+      summary: to display order by restaurant id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                RestaurantId:
+                  type: string
+      responses: 
+        '200':
+          description: OK
+        '400':
+          description: Error Bad Request
+        '404':
+          description: Server Error
+        default:
+          description: Unexpected error
+
+  /api/foodCategory: 
+    get:
+      tags:
+          - Categories
+      summary: to get all food category 
+      responses: 
+        '200':
+          description: OK 
+        '404':
+          description: Server Error
         default:
           description: Unexpected error
 
@@ -177,7 +330,7 @@ paths:
     post:
       tags:
           - Categories
-      summary: to create category 
+      summary: to create a category 
       requestBody:
         required: true
         content:
@@ -190,13 +343,157 @@ paths:
       responses: 
         '200':
           description: OK
+        '400':
+          description: Error Bad Request
+        '404':
+          description: Server Error
+        default:
+          description: Unexpected error
+
+
+
     
-  /api/foodCategory: 
+
+
+  /api/restaurantusers: 
     get:
       tags:
-          - Categories
-      summary: to get all food category 
+          - Restaurant
+      summary: to returns all restaurant users.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: Parameter description in CommonMark or HTML.
+          schema:
+            # type : integer
+            # format: int64
+            type: string
+            example: "Users String"
+            minimum: 1
+      responses: 
+        '200':
+          description: OK 
+        '404':
+          description: Server Error
+        default:
+          description: Unexpected error
+  
+  /api/restaurantusersId: 
+    post:
+      tags:
+          - Restaurant
+      summary: to returns a restaurant details by its ID.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
       responses: 
         '200':
           description: OK
+        '400':
+          description: Error Bad Request
+        '404':
+          description: Server Error
+        default:
+          description: Unexpected error
+   
+
+  /api/rcreateuser: 
+    post:
+      tags:
+          - Restaurant
+      summary: to register a Restaurant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                logo:
+                  type: string
+                password:
+                  type: string
+                location:
+                  type: string
+                open:
+                  type: string
+                close:
+                  type: string
+      responses: 
+        '200':
+          description: OK
+        '400':
+          description: Error Bad Request
+        '404':
+          description: Server Error
+        default:
+          description: Unexpected error
+
+
+  /api/rverifyuser: 
+    post:
+      tags:
+          - Restaurant
+      summary: to login the restaurant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+      responses: 
+        '200':
+          description: OK
+        '400':
+          description: Error Bad Request
+        '404':
+          description: Server Error
+        default:
+          description: Unexpected error
+
+
+  /api/updateOrderConfirmation: 
+    post:
+      tags:
+          - Restaurant
+      summary: to confirm the order by the restaurant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                orderId:
+                  type: string
+                foodId:
+                  type: string
+      responses: 
+        '200':
+          description: OK
+        '400':
+          description: Error Bad Request
+        '404':
+          description: Server Error
+        default:
+          description: Unexpected error
+
+
+
+
+
     
