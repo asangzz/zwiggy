@@ -32,12 +32,12 @@ export default function Header() {
         {(localStorage.getItem("rauthToken")) ?
           <a className="navbar-brand fs-1" onClick={() => navigate(`/restaurantFoodItem/${localStorage.getItem("restaurantID")}`)}>
             {/* Center Section (Logo) */}
-            <div className='m-50 '>
+            <div className='m-50 logo-img-wrap'>
               <img src="/zwiggy.png" alt="Logo" height="50" />
             </div>
           </a> : <Link className="navbar-brand fs-1" to="/">
             {/* Center Section (Logo) */}
-            <div className='m-50 '>
+            <div className='m-50 logo-img-wrap'>
               <img src="/zwiggy.png" alt="Logo" height="50" />
             </div>
           </Link>}
@@ -53,7 +53,7 @@ export default function Header() {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul className="navbar-nav me-auto mb-2">
+          <ul className="navbar-nav me-auto mb-0">
 
             {(localStorage.getItem("rauthToken")) ? "" :
               <li className="nav-item">
@@ -65,7 +65,15 @@ export default function Header() {
                 <Link className="nav-link active" to="/myorder" activeclassname="active">
                   MyOrders
                 </Link> 
-                <div className="btn bg-white text-success mx-2 " onClick={loadCart}>
+               
+                 </li>
+                
+              : ""
+            }
+          </ul>
+          {(localStorage.getItem("authToken")) ?
+          <div className='d-flex'>
+          <div className="btn bg-white text-success mx-2 " onClick={loadCart}>
                       <FontAwesomeIcon icon={faShoppingCart}  >
                       </FontAwesomeIcon>
                       My Cart {(items.length !== undefined) ? items.length : 0}
@@ -73,21 +81,16 @@ export default function Header() {
                 <div className="btn bg-white text-danger mx-1" onClick={handleLogout}>
                     Logout
                   </div>
-                 </li>
-                
-              : ""
-            }
-
-
-
-          </ul>
+          </div>
+           : ""
+          }
           {/* Right Section (Login) - Included in the collapsible div */}
-          <div className='d-flex'>
+          
 
             {(!localStorage.getItem("authToken")) 
             
             ? (!localStorage.getItem("rauthToken")) ? 
-              <div>
+            <div className='d-flex'>
                 <Link className="btn bg-white text-success mx-1" to="/login">
                   Login
                 </Link>
@@ -120,9 +123,6 @@ export default function Header() {
                   {cartView ? <Modal onClose={() => setCartView(false)}><Cart></Cart></Modal> : ""}
                  
                 </div> : ""
-
-
-
             }
 
 
@@ -130,8 +130,6 @@ export default function Header() {
           </div>
 
 
-
-        </div>
       </div>
     </nav>
   );

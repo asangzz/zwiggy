@@ -11,8 +11,30 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
+.text-right {
+  text-align: right !important;
+}
 #carousel{
   max-height: 500px;
   
+}
+.logo-img-wrap{
+  position: relative;
+  top: -10px;
+
+}
+
+.card-product li.list-group-item em {
+  font-weight: 600;
+  min-width: 150px;
+  text-align: right;
+  font-style: normal;
+}
+.card-product li.list-group-item {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: stretch;
 }

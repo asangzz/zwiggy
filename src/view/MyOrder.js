@@ -62,9 +62,9 @@ export default function MyOrder() {
     // }, [])
 
     return (
-        <div>
-          {myOrderData ? (
-            <Order orderData={myOrderData} />
+        <div className='container-fluid'>         
+          {myOrderData ? (                       
+              <Order orderData={myOrderData} />
           ) : (
             <p>Loading...</p>
           )}

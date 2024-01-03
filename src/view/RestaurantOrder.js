@@ -62,7 +62,7 @@ export default function RestaurantOrder() {
     // }, [])
 
     return (
-        <div>
+        <div className='container-fluid'>
           {orderData ? (
             <RestaurantOrders orderData={orderData} />
           ) : (

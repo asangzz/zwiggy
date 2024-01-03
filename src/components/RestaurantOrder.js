@@ -36,29 +36,35 @@ const RestaurantOrders = ({ orderData }) => {
     }
   };
 
- 
+
 
   return (
     <div>
       {orderData.map(order => (
-        <div key={order._id}>
-          <h4>User Email: {order.email}</h4>
+        <div className="row" key={order._id}>
+          <div className='text-right mb-3'>
+          <h5 className='text-right'>User Email: <span className="badge text-bg-primary">{order.email}</span></h5>
+          </div>
           {order.order_data.flat().map(item => (
-            <div className="card mt-3" style={{ width: "16rem", maxHeight: "460px" }} key={orderData._id}>
-              <img src={item.img} className="card-img-top" alt="..." style={{ height: "120px", objectFit: "fill" }} />
-              <div className="card-body">
-                <h5 className="card-title">{item.name}                {orderStatus[`${order._id}_${item.id}`] !== 'approved' && ( 
-                      <button className={`btn btn-success justify-center ms-2`} onClick={() => handleApprove(order._id, item.id)}>Approve</button>
-                    )}
-                  {orderStatus[`${order._id}_${item.id}`] === 'approved' && <div className="text-success mt-2">Order Approved</div>} </h5>
-  
-                <div className='container w-100 p-0' style={{ height: "38px" }}>
-                  <div className='container w-100 p-0' style={{ height: "38px" }}>Item Size: {item.size}, Item Quantity: {item.qty}Price: {item.price}</div>
- 
-     
-                </div> 
+            <div className='col-md-3'>
+              <div className="card mb-3 card-product" key={orderData._id}>
+                <img src={item.img} className="card-img-top" alt="{item.name}" style={{height:"170px", objectFit:"cover"}}  />
+                <div className="card-body">
+                  <h5 className="card-title text-center"><div>{item.name} </div>               {orderStatus[`${order._id}_${item.id}`] !== 'approved' && (
+                    <button className={`btn btn-success justify-center ms-2`} onClick={() => handleApprove(order._id, item.id)}>Approve</button>
+                  )}
+                    {orderStatus[`${order._id}_${item.id}`] === 'approved' && <div className="badge text-bg-success mt-2">Order Approved</div>} </h5>
+
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item"><span>Quantity:</span> <em> {item.qty}</em></li>
+                      <li class="list-group-item"><span>Size:</span> <em> {item.size}</em></li>
+                      <li class="list-group-item"><span>Price:</span> <em> {item.price}</em></li>
+                      {/* <li class="list-group-item"><span>Status:</span> <em>{item.orderConfirmation ? <span className='text-success'>  Accepted </span> : <span className='text-danger'>  Pending </span>}</em></li> */}
+                    </ul>
+                </div>
               </div>
             </div>
+
           ))}
         </div>
       ))}

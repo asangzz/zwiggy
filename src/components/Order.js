@@ -5,24 +5,29 @@ const  Order = ({ orderData }) => {
   const { _id, email, order_data } = orderData;
 
   return (
-    <div className="card mt-3" style={{ width: "16rem", maxHeight: "360px" }}>
+    <div className="row">
      {order_data.map((itemGroup, index) => (
+      <div className='col-md-3'>   
+      <div className="card mb-3 card-product">
+      {itemGroup.map((item) => (
+              <div key={item.id}>  
+      <img src={item.img} className="card-img-top" alt="{item.name}" style={{height:"170px", objectFit:"cover"}} />
       <div className="card-body"> 
-
-        
-          <div key={index} className="list-group mb-3">
-            {itemGroup.map((item) => (
-              <div key={item.id} className="list-group-item">
-                <img src={item.img} className="card-img-top" alt="..." style={{ height: "120px", objectFit: "fill" }} />
-                <p>Name: {item.name}</p>
-                <p>Quantity: {item.qty}</p>
-                <p>Size: {item.size}</p>
-                <p>Price: {item.price}</p>
-                <p>Status: {item.orderConfirmation ? <p className='text-success'>  Accepted </p> : <p className='text-danger'>  Pending </p>}</p>
-              </div>
-            ))}
+          <div key={index} className="list-group">
+                         
+                <h5 class="card-title text-center">{item.name}</h5>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><span>Quantity:</span> <em> {item.qty}</em></li>
+                  <li class="list-group-item"><span>Size:</span> <em> {item.size}</em></li>
+                  <li class="list-group-item"><span>Price:</span> <em> {item.price}</em></li>
+                  <li class="list-group-item"><span>Status:</span> <em>{item.orderConfirmation ? <span className='text-success'>  Accepted </span> : <span className='text-danger'>  Pending </span>}</em></li>
+                </ul>
+             
           </div>
-
+          </div>
+          </div>
+ ))}
+ </div>
           
       
       </div>  ))}
